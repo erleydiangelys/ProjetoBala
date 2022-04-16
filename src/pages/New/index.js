@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 
 import firebase from '../../services/firebaseConnection';
 import { useHistory, useParams } from 'react-router-dom';
+import { format } from 'date-fns';
 
 import Header from '../../componentes/Header';
 import Title from '../../componentes/Title';
@@ -23,7 +24,7 @@ export default function New(){
   const [assunto, setAssunto] = useState('Forro');
   const [status, setStatus] = useState('Aberto');
   const [complemento, setComplemento] = useState('');
-  const [dataentrega, setDataentrega] = useState('');
+  const [dataentrega, setDataentrega] = useState(format(new Date(), "yyyy-MM-dd"),);
   const [localEntrega, setLocalEntrega] = useState('');
 
   const [idCustomer, setIdCustomer] = useState(false);

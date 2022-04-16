@@ -162,7 +162,7 @@ export default function Dashboard(){
         
           <Link to="/new" className="new">
           <FiPlus size={25} color="#FFF" />
-          Novo chamado
+          Novo Pedido
         </Link>
             
           </div>
@@ -171,7 +171,7 @@ export default function Dashboard(){
 
             <Link to="/new" className="new">
               <FiPlus size={25} color="#FFF" />
-              Novo chamado
+              Novo Pedido
             </Link>
 
             <table>
@@ -187,7 +187,7 @@ export default function Dashboard(){
               </thead>
               <tbody>
                 {chamados.map((item, index)=>{
-                  if(item.userId == user.uid){
+                  if(user.tipo === 'admin' || item.userId == user.uid){
                   return(
   
                    <tr key={index}>
@@ -233,7 +233,8 @@ export default function Dashboard(){
             <table>
               <thead>
                 <tr>
-                  {user.tipo === 'admin' && <th scope="col">ID:</th>}
+                  {user.tipo === 'admin' &&
+                   <th scope="col">ID:</th>}
                   <th scope="col">Cliente</th>
                   <th scope="col">Tipo produto</th>
                   <th scope="col">Status</th>
@@ -247,7 +248,8 @@ export default function Dashboard(){
                   return(
   
                    <tr key={index}>
-                     {user.tipo === 'admin' && <td data-label="Cliente">{item.id}</td>}
+                     {user.tipo === 'admin' &&
+                      <td data-label="Cliente">{item.id}</td>}
                       <td data-label="Cliente">{item.cliente}</td>
                       <td data-label="Assunto">{item.assunto}</td>
                       <td data-label="Status">
@@ -262,9 +264,11 @@ export default function Dashboard(){
                          style={{backgroundColor: '#3583f6' }} onClick={()=> toglePostModal(item)}>
                           <FiSearch color="#FFF" size={17} />
                         </button>
+                        {user.tipo === 'admin' &&
                         <Link className="action" style={{backgroundColor: '#F6a935' }} to={`/new/${item.id}`}>
                           <FiEdit2 color="#FFF" size={17} />
                         </Link>
+                    }
                       </td>
                     </tr>
                   )}

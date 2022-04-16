@@ -135,6 +135,9 @@ table td .badge{
   border:0;
   max-width:150px;
 }
+.btn-add:hover{
+  background-color: #272323;
+}
 
 @media screen and (max-width: 600px){
   table{

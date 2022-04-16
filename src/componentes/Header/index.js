@@ -22,10 +22,13 @@ export default function Header() {
                 <FiHome size={24} color="white" />
                 Chamados
             </Link>
+            {user.tipo === 'admin' &&
             <Link to="/customers">
                 <FiUser size={24} color="white" />
                 Clientes
             </Link>
+            }
+
             <Link to="/profile">
                 <FiSettings size={24} color="white" />
                 Configurações
