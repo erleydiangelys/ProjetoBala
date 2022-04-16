@@ -61,7 +61,10 @@ export default function Dashboard(){
           created: doc.data().created,
           createdFormated: format(doc.data().created.toDate(), 'dd/MM/yyyy'),
           status: doc.data().status,
-          complemento: doc.data().complemento
+          complemento: doc.data().complemento,
+          prevDataEntrega: format(doc.data().prevDataEntrega.toDate(), 'dd/MM/yyyy'),
+          localEntrega: doc.data().localEntrega,
+
         })
       })
 
@@ -144,7 +147,7 @@ export default function Dashboard(){
                   <th scope="col">Cliente</th>
                   <th scope="col">Assunto</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Cadastrado em</th>
+                  <th scope="col">Previsão Entrega</th>
                   <th scope="col">#</th>
                 </tr>
               </thead>
@@ -156,10 +159,11 @@ export default function Dashboard(){
                       <td data-label="Assunto">{item.assunto}</td>
                       <td data-label="Status">
                         <span className="badge"
-                         style={{ backgroundColor: item.status === 'Aberto' ? '#db4a39' :
-                                (item.status === 'Atendido' ? '#5cb85c' : '#ff8c00') }}>{item.status}</span>
+                         style={{ backgroundColor: item.status === 'Aberto' ? '#FF5733' :
+                                (item.status === 'Progresso' ? '#FFF833' :
+                                 (item.status === 'Feito' ? '#33FFC3' : '#5FFF33')) }}>{item.status}</span>
                       </td>
-                      <td data-label="Cadastrado">{item.createdFormated}</td>
+                      <td data-label="Cadastrado">{item.prevDataEntrega}</td>
                       <td data-label="#">
                         <button className="action"
                          style={{backgroundColor: '#3583f6' }} onClick={()=> toglePostModal(item)}>

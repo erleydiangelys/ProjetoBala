@@ -33,8 +33,19 @@ export default function Modal({conteudo, close}){
 
           <div className="row">
             <span>
-              Status: <i style={{ color: 'white', backgroundColor: conteudo.status === 'Aberto' ? '#db4a39' :
-                                (conteudo.status === 'Atendido' ? '#5cb85c' : '#ff8c00') }}>{conteudo.status}</i>
+              Status: <i style={{ backgroundColor: conteudo.status === 'Aberto' ? '#FF5733' :
+                                (conteudo.status === 'Progresso' ? '#FFF833' :
+                                 (conteudo.status === 'Feito' ? '#33FFC3' : '#5FFF33')) }}>{conteudo.status}</i>
+            </span>
+            
+            <span>
+              Previsão de entrega: <i>{conteudo.prevDataEntrega}</i>
+            </span>
+          </div>
+
+          <div className='row'>
+            <span>
+              Local de entrega: <i>{conteudo.localEntrega}</i>
             </span>
           </div>
 

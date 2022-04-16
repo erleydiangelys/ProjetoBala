@@ -20,9 +20,11 @@ export default function New(){
   const [customers, setCustomers] = useState([]);
   const [customerSelected, setCustomerSelected] = useState(0);
 
-  const [assunto, setAssunto] = useState('Suporte');
+  const [assunto, setAssunto] = useState('Forro');
   const [status, setStatus] = useState('Aberto');
   const [complemento, setComplemento] = useState('');
+  const [dataentrega, setDataentrega] = useState('');
+  const [localEntrega, setLocalEntrega] = useState('');
 
   const [idCustomer, setIdCustomer] = useState(false);
 
@@ -103,7 +105,9 @@ export default function New(){
         assunto: assunto,
         status: status,
         complemento: complemento,
-        userId: user.uid
+        userId: user.uid,
+        prevDataEntrega: new Date(dataentrega),
+        localEntrega: localEntrega
       })
       .then(()=>{
         toast.success('Chamado Editado com sucesso!');
@@ -127,7 +131,9 @@ export default function New(){
       assunto: assunto,
       status: status,
       complemento: complemento,
-      userId: user.uid
+      userId: user.uid,
+      prevDataEntrega: new Date(dataentrega),
+      localEntrega: localEntrega
     })
     .then(()=> {
       toast.success('Chamado criado com sucesso!');
@@ -192,9 +198,9 @@ export default function New(){
 
             <label>Assunto</label>
             <select value={assunto} onChange={handleChangeSelect}>
-              <option value="Suporte">Suporte</option>
-              <option value="Visita Tecnica">Visita Tecnica</option>
-              <option value="Financeiro">Financeiro</option>
+              <option value="Forro">Forro</option>
+              <option value="Anilhas">Anilhas</option>
+              <option value="Outros">Outros</option>
             </select>
 
             <label>Status</label>
@@ -215,22 +221,45 @@ export default function New(){
               onChange={handleOptionChange}
               checked={ status === 'Progresso' }
               />
-              <span>Progresso</span>
+              <span>Em processo</span>
 
               <input 
               type="radio"
               name="radio"
-              value="Atendido"
+              value="Feito"
               onChange={handleOptionChange}
-              checked={ status === 'Atendido' }
+              checked={ status === 'Feito' }
               />
-              <span>Atendido</span>
-            </div>
+              <span>Feito</span>
 
+              <input 
+              type="radio"
+              name="radio"
+              value="Entregue"
+              onChange={handleOptionChange}
+              checked={ status === 'Entregue' }
+              />
+              <span>Entregue</span>
+
+            </div>
+            
+            <label>Previsão de entrega</label>
+            <input type="date"
+              value={dataentrega}
+              onChange={ (e) => setDataentrega(e.target.value) }
+            />
+
+            <label>Endereço de entrega</label>
+            <textarea
+              type="text"
+              placeholder="Local onde deverá ser entregue o produto"
+              value={localEntrega}
+              onChange={ (e) => setLocalEntrega(e.target.value) }
+            />
             <label>Complemento</label>
             <textarea
               type="text"
-              placeholder="Descreva seu problema (opcional)."
+              placeholder="Descreva as Observações sobre o Pedido (opcional)."
               value={complemento}
               onChange={ (e) => setComplemento(e.target.value) }
             />
