@@ -58,6 +58,10 @@
 
 .form-profile button{
     max-width: 600px;
+    background-color: #4b4949;
+}
+.form-profile button:hover{
+    background-color: #272323;
 }
 
 .logout-btn {
@@ -69,4 +73,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: ease-in 0.2s;
+    
+}
+.logout-btn:hover {
+    transform: scale(1.1);
 }

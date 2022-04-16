@@ -10,7 +10,7 @@ function App() {
   return (
     <AuthProvider>
         <BrowserRouter>
-          <ToastContainer position="top-center" toastStyle={{ backgroundColor: "#181C2e", color: "white"}} autoClose={3000} />
+          <ToastContainer position="top-center" toastStyle={{ backgroundColor: "#4b4949", color: "white"}} autoClose={3000} />
           <Routes/>
         </BrowserRouter>
     </AuthProvider>

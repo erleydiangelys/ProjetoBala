@@ -97,6 +97,7 @@ function AuthProvider({ children }) {
       await firebase.auth().signOut()
         localStorage.removeItem("SistemaUsers");
         setUser(null);
+        toast.success('Tudo certo você esta fora, Até logo!')
     }
 
 

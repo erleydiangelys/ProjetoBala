@@ -142,12 +142,6 @@ export default function Profile(){
           </form>
         </div>
 
-        <div className="container">
-            <button className="logout-btn" onClick={ () => signOut() } >
-               Sair
-            </button>
-        </div>
-
       </div>
     </div>
   )
