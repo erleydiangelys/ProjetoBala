@@ -8,13 +8,14 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [tipo, setTipo] = useState('cliente');
 
   const {signUp, loadingAuth} = useContext(AuthContext);
 
   function handleSubmit(e) {
     e.preventDefault();
     if(name !== '' && email !== '' && password !== '') {
-      signUp(email, password, name);
+      signUp(email, password, name, tipo);
     }
   }
 

@@ -1,6 +1,6 @@
 
 import './dashboard.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import Header from '../../componentes/Header';
 import Title from '../../componentes/Title';
@@ -8,8 +8,10 @@ import Modal from '../../componentes/Modal';
 import { FiMessageSquare, FiPlus, FiSearch, FiEdit2 } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { AuthContext } from '../../contexts/auth';
 
 import firebase from '../../services/firebaseConnection';
+import { toast } from 'react-toastify';
 
 const listRef = firebase.firestore().collection('chamados').orderBy('created', 'desc');
 
@@ -21,29 +23,33 @@ export default function Dashboard(){
   const [lastDocs, setLastDocs] = useState();
   const [showPostModal, setShowPostModal] = useState(false);
   const [detail, setDetail] = useState();
+  const [addNovoPedido, setAddNovoPedido] = useState('');
 
+  const { user } = useContext(AuthContext);
+
+  const selID = [];
 
   useEffect(() => {
-    async function loadChamados() {
-      await listRef
-        .limit(10)
-        .get()
-        .then((snapshot) => {
-          updateState(snapshot);
-        })
-        .catch((err) => {
-          console.log("Deu algum erro: ", err);
-          setLoadingMore(false);
-        });
-
-      setLoading(false);
-    }
-
+  
     loadChamados();
 
     return () => {};
   }, []);
 
+  async function loadChamados() {
+    await listRef
+      .limit(10)
+      .get()
+      .then((snapshot) => {
+        updateState(snapshot);
+      })
+      .catch((err) => {
+        console.log("Deu algum erro: ", err);
+        setLoadingMore(false);
+      });
+
+    setLoading(false);
+  }
 
 
   async function updateState(snapshot){
@@ -64,6 +70,7 @@ export default function Dashboard(){
           complemento: doc.data().complemento,
           prevDataEntrega: format(doc.data().prevDataEntrega.toDate(), 'dd/MM/yyyy'),
           localEntrega: doc.data().localEntrega,
+          userId: doc.data().userId,
 
         })
       })
@@ -95,6 +102,29 @@ export default function Dashboard(){
     setDetail(item);
     setShowPostModal(!showPostModal);
   }
+
+  async function addPedido(){
+    await listRef
+    .get()
+    .then(async(snapshot)=>{
+      await snapshot.forEach((doc)=>{
+        if(doc.id === addNovoPedido){
+          selID.push(doc.id)
+           firebase.firestore().collection('chamados')
+            .doc(doc.id)
+            .update({
+              userId: user.uid,
+            })
+            .then(()=>{
+              loadChamados();
+              setAddNovoPedido('');
+              toast.success('Pedido adicionado com sucesso!')
+            })
+        }
+      })
+    })
+
+  }
  
 
   if(loading){
@@ -125,17 +155,20 @@ export default function Dashboard(){
           <FiMessageSquare size={25} />
         </Title>
 
-        {chamados.length === 0 ? (
+        {chamados.length  === 0  ? (
           <div className="container dashboard">
             <span>Nenhum chamado registrado...</span>
 
-            <Link to="/new" className="new">
-              <FiPlus size={25} color="#FFF" />
-              Novo chamado
-            </Link>
+        
+          <Link to="/new" className="new">
+          <FiPlus size={25} color="#FFF" />
+          Novo chamado
+        </Link>
+            
           </div>
-        )  : (
+        )  : user.tipo === 'admin' ? (
           <>
+
             <Link to="/new" className="new">
               <FiPlus size={25} color="#FFF" />
               Novo chamado
@@ -144,6 +177,7 @@ export default function Dashboard(){
             <table>
               <thead>
                 <tr>
+                {user.tipo === 'admin' && <th scope="col">ID:</th>}
                   <th scope="col">Cliente</th>
                   <th scope="col">Tipo produto</th>
                   <th scope="col">Status</th>
@@ -153,8 +187,11 @@ export default function Dashboard(){
               </thead>
               <tbody>
                 {chamados.map((item, index)=>{
+                  if(item.userId == user.uid){
                   return(
-                    <tr key={index}>
+  
+                   <tr key={index}>
+                     {user.tipo === 'admin' && <td data-label="Cliente">{item.id}</td>}
                       <td data-label="Cliente">{item.cliente}</td>
                       <td data-label="Assunto">{item.assunto}</td>
                       <td data-label="Status">
@@ -174,16 +211,79 @@ export default function Dashboard(){
                         </Link>
                       </td>
                     </tr>
-                  )
+                  )}
                 })}
               </tbody>
             </table>
-            
-            {loadingMore && <h3 style={{textAlign: 'center', marginTop: 15 }}>Buscando dados...</h3>}
-            { !loadingMore && !isEmpty && <button className="btn-more" onClick={handleMore}>Buscar mais</button> }
+            <div className='btn-container'>
+    
+              <div className='add-pedido'>
+                <input type="text" placeholder="Numero do pedido" onChange={(e)=> setAddNovoPedido(e.target.value)}/>
+                <button className="btn-add" onClick={addPedido}>Adicionar pedido</button>
+              </div>
+
+              {loadingMore && <h3 style={{textAlign: 'center', marginTop: 15 }}>Buscando dados...</h3>}
+              { !loadingMore && !isEmpty && <button className="btn-more" onClick={handleMore}>Buscar mais</button> }
+
+            </div>
 
           </>
-        )}
+            ) : (
+              <>
+            <table>
+              <thead>
+                <tr>
+                  {user.tipo === 'admin' && <th scope="col">ID:</th>}
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Tipo produto</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Previsão Entrega</th>
+                  <th scope="col">#</th>
+                </tr>
+              </thead>
+              <tbody>
+                {chamados.map((item, index)=>{
+                  if(item.userId == user.uid && user.tipo === 'cliente'){
+                  return(
+  
+                   <tr key={index}>
+                     {user.tipo === 'admin' && <td data-label="Cliente">{item.id}</td>}
+                      <td data-label="Cliente">{item.cliente}</td>
+                      <td data-label="Assunto">{item.assunto}</td>
+                      <td data-label="Status">
+                        <span className="badge"
+                         style={{ backgroundColor: item.status === 'Aberto' ? '#FF5733' :
+                                (item.status === 'Progresso' ? '#FFF833' :
+                                 (item.status === 'Feito' ? '#33FFC3' : '#5FFF33')) }}>{item.status}</span>
+                      </td>
+                      <td data-label="Cadastrado">{item.prevDataEntrega}</td>
+                      <td data-label="#">
+                        <button className="action"
+                         style={{backgroundColor: '#3583f6' }} onClick={()=> toglePostModal(item)}>
+                          <FiSearch color="#FFF" size={17} />
+                        </button>
+                        <Link className="action" style={{backgroundColor: '#F6a935' }} to={`/new/${item.id}`}>
+                          <FiEdit2 color="#FFF" size={17} />
+                        </Link>
+                      </td>
+                    </tr>
+                  )}
+                })}
+              </tbody>
+            </table>
+            <div className='btn-container'>
+    
+              <div className='add-pedido'>
+                <input type="text" placeholder="Numero do pedido" onChange={(e)=> setAddNovoPedido(e.target.value)}/>
+                <button className="btn-add" onClick={addPedido}>Adicionar pedido</button>
+              </div>
+
+              {loadingMore && <h3 style={{textAlign: 'center', marginTop: 15 }}>Buscando dados...</h3>}
+              { !loadingMore && selID.length > 9 && !isEmpty && <button className="btn-more" onClick={handleMore}>Buscar mais</button> }
+
+            </div>
+          </>
+  )}
 
       </div>
 
