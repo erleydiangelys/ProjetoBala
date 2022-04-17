@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../contexts/auth';
 import avatar from '../../assets/avatar.png';
 import { FiHome, FiUser, FiSettings, FiLogOut } from "react-icons/fi";
+import {EnviaWhats, RedirectInsta, RedirectLink} from '../IconesContatos';
 
 import { Link } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ export default function Header() {
 
     return(
         <div className='sidebar'>
-            <div>
+            <div className='foto'>
                 <img 
                 src={user.avatarUrl == null ? avatar : user.avatarUrl} 
                 alt="foto avatar" />
@@ -39,6 +40,14 @@ export default function Header() {
                 <FiLogOut size={24} color="white" />
                 Sair
             </Link>
+
+            <div className='redirect-btn'>
+            <EnviaWhats />
+            <RedirectInsta/>
+            <RedirectLink/>
+            </div>
+        
+            
 
         
 

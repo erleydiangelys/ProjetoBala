@@ -8,7 +8,7 @@
     overflow: auto;
 }
 
-.sidebar div{
+.sidebar foto{
     background: url(../../assets/cover.png);
     background-color: #979797;
     background-position: center;
@@ -63,6 +63,14 @@
     padding: 1px 16px;
 }
 
+.redirect-btn{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
 @media screen and (max-width: 700px) {
     .sidebar {
         width: 100%;
@@ -85,6 +93,7 @@
     .sidebar a svg{
         display: none;
     }
+
 }
 
 @media screen and (max-width: 400px) {
@@ -96,4 +105,5 @@
     .sidebar a svg{
         display: none; 
     }
+
 }

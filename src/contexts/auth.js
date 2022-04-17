@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
       loadStorage();
     }, []);
 
-    async function signIn(email, password, tipo) {
+    async function signIn(email, password) {
       setloadingAuth(true);
 
       await firebase.auth().signInWithEmailAndPassword(email, password)
@@ -39,7 +39,8 @@ function AuthProvider({ children }) {
         nome: userProfile.data().nome,
         avatarUrl: userProfile.data().avatarUrl,
         email: value.user.email,
-        tipo: userProfile.data().tipo,
+        tipo: userProfile.data().
+tipo,
       };
 
           setUser(data);
