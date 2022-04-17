@@ -134,6 +134,8 @@ table td .badge{
   margin-right: 10px;
   border:0;
   max-width:150px;
+  display: flex;
+  flex-direction: row;
 }
 .btn-add:hover{
   background-color: #272323;

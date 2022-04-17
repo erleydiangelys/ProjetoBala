@@ -6,6 +6,8 @@ import Header from '../../componentes/Header';
 import Title from '../../componentes/Title';
 import Modal from '../../componentes/Modal';
 import { FiMessageSquare, FiPlus, FiSearch, FiEdit2 } from 'react-icons/fi';
+import { GrFormViewHide, GrFormView } from "react-icons/gr";
+
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { AuthContext } from '../../contexts/auth';
@@ -24,6 +26,7 @@ export default function Dashboard(){
   const [showPostModal, setShowPostModal] = useState(false);
   const [detail, setDetail] = useState();
   const [addNovoPedido, setAddNovoPedido] = useState('');
+  const [viewID, setViewID] = useState(false);
 
   const { user } = useContext(AuthContext);
 
@@ -191,7 +194,9 @@ export default function Dashboard(){
                   return(
   
                    <tr key={index}>
-                     {user.tipo === 'admin' && <td data-label="Cliente">{item.id}</td>}
+                     {user.tipo === 'admin' && viewID ? (<td data-label="Cliente">
+                     <GrFormView size={20} onClick={()=>setViewID(false)}/> {item.id} </td>) :
+                     (<td data-label="Cliente"><GrFormViewHide size={17} onClick={()=>setViewID(true)}/></td>)}
                       <td data-label="Cliente">{item.cliente}</td>
                       <td data-label="Assunto">{item.assunto}</td>
                       <td data-label="Status">
