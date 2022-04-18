@@ -291,6 +291,8 @@ export default function Dashboard(){
               <div className='add-pedido'>
                 <input type="text" placeholder="Numero do pedido" onChange={(e)=> setAddNovoPedido(e.target.value)}/>
                 <button className="btn-add" onClick={addPedido}>Adicionar pedido</button>
+
+                <Tooltip name={<BiMessageSquareError size={20}/>} text="Digite o numero do pedido que recebeu para acompanha-lo" />
               </div>
 
               {loadingMore && <h3 style={{textAlign: 'center', marginTop: 15 }}>Buscando dados...</h3>}
