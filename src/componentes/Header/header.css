@@ -91,7 +91,7 @@
     }
 
     .sidebar a svg{
-        display: none;
+         margin-right: .5em;
     }
 
 }
@@ -107,3 +107,116 @@
     }
 
 }
+
+
+
+
+
+
+.min-sidebar{
+    margin: 0;
+    padding: 0;
+    width: 45px;
+    background-color: #979797;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+.min-sidebar foto{
+    display: none;
+}
+
+.min-sidebar div {
+    padding-top: 20px;
+}
+
+.min-sidebar div img{
+    display:none
+}
+
+.min-sidebar a{
+    display: block;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    transition: ease-in-out 0.2s;
+}
+
+.min-sidebar a svg{
+    margin-right: .5em;
+}
+
+.min-sidebar a p{
+    display: none;
+}
+
+.min-sidebar a:hover{
+    background-color: #4b4949;
+    color: #fff;
+}
+
+.min-sidebar a svg:hover{
+    background-color: #4b4949;
+    color: #fff;
+}
+
+.min-redirect-btn{
+    display: none;
+}
+
+.min-content{
+    margin-left: 45px;
+    padding: 1px 16px;
+}
+
+@media screen and (max-width: 700px) {
+    .min-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content{
+        margin-left: 0;
+    }
+
+    .min-sidebar div{
+        display: none;
+    }
+
+    .min-sidebar a{
+        float: left;
+    }
+
+    .min-sidebar a svg{
+         margin-right: .5em;
+    }
+
+    .min-sidebar a p{
+        display: flex;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+    .min-sidebar a {
+        text-align: center;
+        display: none;
+    }
+
+    .min-sidebar a svg{
+        display: none; 
+    }
+
+    .min-sidebar a p{
+        display: flex;
+    }
+
+}
+
+
+
