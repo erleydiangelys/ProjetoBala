@@ -135,6 +135,12 @@ table td .badge{
   flex-direction: row;
 }
 
+.add-pedido svg{
+  margin-left: 10px;
+  margin-top: 10px;
+  ;
+}
+
 .add-pedido input{
   font-size: 15px;
   border-radius: 5px;
