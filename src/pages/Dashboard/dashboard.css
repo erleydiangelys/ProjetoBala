@@ -155,6 +155,12 @@ table td .badge{
   background-color: #272323;
 }
 
+.btn-info{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
 @media screen and (max-width: 600px){
   table{
     border: 0;
@@ -197,6 +203,13 @@ table td .badge{
 
   table td:last-child{
     border-bottom: 0;
+  }
+
+  .add-pedido{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
   }
 
 }

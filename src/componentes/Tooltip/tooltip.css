@@ -25,5 +25,10 @@
   /* Show the tooltip text when you mouse over the tooltip container */
   .tooltip:hover .tooltiptext {
     visibility: visible;
+    width: 140px;
+    top: 100%;
+    right: 60%;
+    margin-top: 4px;
+    margin-left: -60px;
   }
   
