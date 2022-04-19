@@ -40,7 +40,7 @@ export default function Dashboard(){
     loadChamados();
 
     return () => {};
-  }, [loadingMore]);
+  }, []);
 
   async function loadChamados() {
     await listRef
