@@ -40,7 +40,7 @@ export default function Dashboard(){
     loadChamados();
 
     return () => {};
-  }, []);
+  }, [loadingMore]);
 
   async function loadChamados() {
     await listRef
@@ -193,7 +193,7 @@ export default function Dashboard(){
               </thead>
               <tbody>
                 {chamados.map((item, index)=>{
-                  if(user.tipo === 'admin' || item.userId == user.uid){
+                  if(user.tipo === 'admin' || String(item.userId) === String(user.uid)) {
                   return(
   
                    <tr key={index}>
@@ -219,7 +219,9 @@ export default function Dashboard(){
                         </Link>
                       </td>
                     </tr>
-                  )}
+                  )} else {
+                    return null;
+                  }
                 })}
               </tbody>
             </table>
@@ -249,7 +251,7 @@ export default function Dashboard(){
               </thead>
               <tbody>
                 {chamados.map((item, index)=>{
-                  if(item.userId == user.uid && user.tipo === 'cliente'){
+                  if(String(item.userId) === String(user.uid) && user.tipo === 'cliente'){
                   return(
   
                    <tr key={index}>
