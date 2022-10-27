@@ -44,7 +44,7 @@ export function RedirectLink(){
 }
 
 function enviarMensagem(user) {
-  const  num = '88996052231';
+  const  num = '000000000000';
   const  mgs = `falo em nome de: ${user.nome} `
 
     var url = `https://api.whatsapp.com/send?phone=55${num}&text=${mgs}`;
